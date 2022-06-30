@@ -1,70 +1,51 @@
-# Getting Started with Create React App
+### **Tasks**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- Framework: React, Vue.js
+- [x] Show max 8 quotes for both buy and sell. Quote row should vertical align center.
+- [x] Format number with commas as thousands separators.
+- [x] Add hover background color on whole row when mouse hover on the quote.
+-  Last price color style:
+    - [x] If current price > last price: `#00b15d` for text color, `rgba(16, 186, 104, 0.12)` for background color
+    - [x] If current price < last price: `#FF5B5A` for text color, `rgba(255, 90, 90, 0.12)` for background color
+    - [x] If price is the same: `#F0F4F8` for text color , `rgba(134, 152, 170, 0.12)` for background color
+- Quote total formula:
+    - [x] Sell quotes: sum up quote size from lowest price quote to the highest
+    - [x] Buy quotes: sum up quote size from highest price quote to the lowest
+- Accumulative total size percentage bar formula:
+    - [x] Current quote accumulative total size / Total quote size of buy or sell
+- Quote highlight animation:
+    - [x] When new quote appear(price hasn't shown on the order book before), add highlight animation on whole quote row. Red background color for sell quote. Green background color for buy quote.
+    - [x] When quote size change, add highlight animation on size cell. Red background color if size increase. Green background color if size decrease.
 
-## Available Scripts
+**OrderBook WebSocket API:**
 
-In the project directory, you can run:
+Endpoint: `wss://ws.btse.com/ws/oss/futures`
 
-### `npm start`
+Topic: `update:BTCPFC`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+API doc: [https://btsecom.github.io/docs/futures/en/#orderbook-incremental-updates](https://btsecom.github.io/docs/futures/en/#orderbook-incremental-updates)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+  - [x] The first response received will be a snapshot of the current order book (this is indicated in the `type` field with value `snapshot`) and 50 levels will be returned. Incremental updates will be sent in subsequent packets with type `delta` . Re-subscribe topic to get new snapshot if `prevSeqNum` of new data doesn’t match last data’s `seqNum`
 
-### `npm test`
+**Last price WebSocket API:**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Use first price in the array as last price.
 
-### `npm run build`
+Endpoint: `wss://ws.btse.com/ws/futures`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Topic: `tradeHistoryApi:BTCPFC`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+API doc: [https://btsecom.github.io/docs/futures/en/#public-trade-fills](https://btsecom.github.io/docs/futures/en/#public-trade-fills)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Styles
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Background color: `#131B29`
+- Default text color: `#F0F4F8`
+- Quote table head text color: `#8698aa`
+- Buy quote price text color: `#00b15d`
+- Sell quote price text color: `#FF5B5A`
+- Quote row hover background color: `#1E3059`
+- Buy quote accumulative total size bar color: `rgba(16, 186, 104, 0.12)`
+- Sell quote accumulative total size bar color: `rgba(255, 90, 90, 0.12)`
+- Animation flash green background color: `rgba(0, 177, 93, 0.5)`
+- Animation flash red background color: `rgba(255, 91, 90, 0.5)`
