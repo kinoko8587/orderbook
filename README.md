@@ -25,7 +25,8 @@ Topic: `update:BTCPFC`
 
 API doc: [https://btsecom.github.io/docs/futures/en/#orderbook-incremental-updates](https://btsecom.github.io/docs/futures/en/#orderbook-incremental-updates)
 
-  - [x] The first response received will be a snapshot of the current order book (this is indicated in the `type` field with value `snapshot`) and 50 levels will be returned. Incremental updates will be sent in subsequent packets with type `delta` . Re-subscribe topic to get new snapshot if `prevSeqNum` of new data doesn’t match last data’s `seqNum`
+  - [x] The first response received will be a snapshot of the current order book (this is indicated in the `type` field with value `snapshot`) and 50 levels will be returned. Incremental updates will be sent in subsequent packets with type `delta` . 
+  - [ ] Re-subscribe topic to get new snapshot if `prevSeqNum` of new data doesn’t match last data’s `seqNum`
 
 **Last price WebSocket API:**
 
