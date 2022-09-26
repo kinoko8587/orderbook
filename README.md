@@ -1,6 +1,6 @@
 ### **Tasks**
 
-- Framework: React, Vue.js
+- Framework: React
 - [x] Show max 8 quotes for both buy and sell. Quote row should vertical align center.
 - [x] Format number with commas as thousands separators.
 - [x] Add hover background color on whole row when mouse hover on the quote.
