@@ -61,6 +61,9 @@ export const orderBookSlice = createSlice({
               data.size = size;
               state.bids.set(key, data);
               state.sellQuotes += size;
+              if (state.bidsArr.length === 0) {
+                return;
+              }
               state.bidsArr = [...update(state.bidsArr, key)];
             }
           } else {
@@ -73,6 +76,9 @@ export const orderBookSlice = createSlice({
               status: "new",
             };
             state.bids.set(key, obj);
+            if (state.bidsArr.length === 0) {
+              return;
+            }
             state.bidsArr = [...update(state.bidsArr, key)];
           }
         });
@@ -90,6 +96,9 @@ export const orderBookSlice = createSlice({
               data.size = size;
               state.asks.set(key, data);
               state.buyQuotes += size;
+              if (state.asksArr.length === 0) {
+                return;
+              }
               state.asksArr = [...update(state.asksArr, key)];
             }
           } else {
@@ -102,6 +111,9 @@ export const orderBookSlice = createSlice({
               status: "new",
             };
             state.asks.set(key, obj);
+            if (state.asksArr.length === 0) {
+              return;
+            }
             state.asksArr = [...update(state.asksArr, key)];
           }
         });
@@ -121,24 +133,24 @@ export const orderBookSlice = createSlice({
 });
 
 const update = (arr, num) => {
-  if (arr[arr.length - 1] >= num) {
-    return arr;
-  }
-  if (arr.find((x) => x === num)) {
-    return arr;
-  }
-  if (arr.length < 7) {
-    return arr.push(num);
-  }
-  arr.splice(7, 1, num);
-  return arr.sort((a, b) => {
-    return b - a;
-  });
+    if (arr.length === 0) {
+      return [];
+    }
+    if (arr[arr.length - 1] >= num) {
+      return arr;
+    }
+    if (arr.find((x) => x === num)) {
+      return arr;
+    }
+    if (arr.length < 7) {
+      return arr.push(num);
+    }
+    arr.splice(7, 1, num);
+    return arr.sort((a, b) => b - a);
 };
 
 const remove = (arr, num) => {
-  const index = arr.findIndex(num);
-  return index ? arr : arr.splice(index, 0, num);
+  return arr.filter((x) => x !== num);
 };
 
 export const { updateOrderBook, updateTradeHistory } = orderBookSlice.actions;

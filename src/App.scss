@@ -5,6 +5,15 @@ $red-background: rgba(255, 90, 90, 0.12);
 $green-flash-background: rgba(0, 177, 93, 0.5);
 $red-flash-background: rgba(255, 91, 90, 0.5);
 
+.app{
+  margin: 10px;
+}
+
+.line{
+  border: #8698aa solid 0.5px;
+  margin-bottom: 5px;
+}
+
 table {
   width: 100%;
   display: table;
@@ -36,7 +45,7 @@ td {
 
 tbody > tr {
   &:hover {
-    background-color: #8698aa;
+    background-color: #8698aa !important;
   }
   
 }
@@ -47,16 +56,26 @@ th {
 
 .bid-order {
   tr+.new {
-    background-color: $red-flash-background;
+    animation: animation-red 2s ease-out;
   }
   .price {
     color: $red;
   }
 }
 
+@keyframes animation-red {
+  from {background-color: $red-flash-background;}
+  to {background-color: #131B29;}
+}
+
+@keyframes animation-green {
+  from {background-color: $green-flash-background;}
+  to {background-color: #131B29;}
+}
+
 .ask-order {
   tr+.new {
-    background-color: $green-flash-background;
+    animation: animation-green 2s ease-out;
   }
   .price {
     color: $green;
