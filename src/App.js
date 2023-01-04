@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.scss';
-import { useDispatch } from 'react-redux';
-import { updateOrderBook, updateTradeHistory } from './store/orderBook';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateOrderBook, updateTradeHistory, reset } from './store/orderBook';
 import Orderbook from './components/Orderbook';
 
 const endpoint =
@@ -14,31 +14,43 @@ function App() {
 
   const [ws] = useState(() => new WebSocket(endpoint));
   const [wsTradeHistory] = useState(() => new WebSocket(endPointTradeHistory));
+  const prevSeqNum = useSelector((state) => state.orderBook.prevSeqNum);
 
   useEffect(() => {
     if (ws) {
       ws.onopen = () => {
         console.log('ws open connection');
-        sendMessage();
+        ws.send(JSON.stringify(subscribeUpdate()));
       };
 
       ws.onclose = () => {
-        console.log('close connection');
+        console.log('ws close connection');
       };
 
       ws.onmessage = (event) => {
         const response = JSON.parse(event.data);
-        dispatch(updateOrderBook(response));
+        if (response.op === 'unsubscribe') {
+          console.log(response);
+          ws.send(JSON.stringify(subscribeUpdate()));
+          return;
+        }
+        if (prevSeqNum === 0 || prevSeqNum === response.data.prevSeqNum) {
+          dispatch(updateOrderBook(response));
+        } else {
+          console.log('unsubscribeUpdate');
+          ws.send(JSON.stringify(unsubscribeUpdate()));
+          dispatch(reset());
+        }
       };
     }
     if (wsTradeHistory) {
       wsTradeHistory.onopen = () => {
-        console.log('wsTradeHistory open connection');
-        sendMessageTradeHistory();
+        console.log('TradeHistory open connection');
+        wsTradeHistory.send(JSON.stringify(subscribeTradeHistory()));
       };
 
       wsTradeHistory.onclose = () => {
-        console.log('close connection');
+        console.log('TradeHistory close connection');
       };
 
       wsTradeHistory.onmessage = (event) => {
@@ -48,20 +60,25 @@ function App() {
     }
   }, [ws, wsTradeHistory]);
 
-  const sendMessage = () => {
-    const api = {
+  const subscribeUpdate = () => {
+    return {
       op: 'subscribe',
       args: ['update:BTCPFC'],
     };
-    ws.send(JSON.stringify(api));
   };
 
-  const sendMessageTradeHistory = () => {
-    const api2 = {
+  const unsubscribeUpdate = () => {
+    return {
+      op: 'unsubscribe',
+      args: ['update:BTCPFC'],
+    };
+  };
+
+  const subscribeTradeHistory = () => {
+    return {
       op: 'subscribe',
       args: ['tradeHistoryApi:BTCPFC'],
     };
-    wsTradeHistory.send(JSON.stringify(api2));
   };
 
   return (

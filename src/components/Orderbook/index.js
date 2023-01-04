@@ -35,8 +35,11 @@ function Orderbook() {
     return num.toLocaleString('en');
   };
 
-  const bidsTable = bidsArr.map((x) => {
+  const bidsTable = bidsArr.map((x, index) => {
     const value = bids.get(x);
+    if (!value || index > 7) {
+      return null;
+    }
     return (
       <tr className={value.status} key={x}>
         <td className="price">{formatPrice(x)}</td>
@@ -52,8 +55,11 @@ function Orderbook() {
     );
   });
 
-  const asksTable = asksArr.map((x) => {
+  const asksTable = asksArr.map((x, index) => {
     const value = asks.get(x);
+    if (!value || index > 7) {
+      return null;
+    }
     return (
       <tr className={value.status} key={x}>
         <td className="price">{formatPrice(x)}</td>

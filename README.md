@@ -4,18 +4,18 @@
 - [x] Show max 8 quotes for both buy and sell. Quote row should vertical align center.
 - [x] Format number with commas as thousands separators.
 - [x] Add hover background color on whole row when mouse hover on the quote.
--  Last price color style:
-    - [x] If current price > last price: `#00b15d` for text color, `rgba(16, 186, 104, 0.12)` for background color
-    - [x] If current price < last price: `#FF5B5A` for text color, `rgba(255, 90, 90, 0.12)` for background color
-    - [x] If price is the same: `#F0F4F8` for text color , `rgba(134, 152, 170, 0.12)` for background color
+- Last price color style:
+  - [x] If current price > last price: `#00b15d` for text color, `rgba(16, 186, 104, 0.12)` for background color
+  - [x] If current price < last price: `#FF5B5A` for text color, `rgba(255, 90, 90, 0.12)` for background color
+  - [x] If price is the same: `#F0F4F8` for text color , `rgba(134, 152, 170, 0.12)` for background color
 - Quote total formula:
-    - [x] Sell quotes: sum up quote size from lowest price quote to the highest
-    - [x] Buy quotes: sum up quote size from highest price quote to the lowest
+  - [x] Sell quotes: sum up quote size from lowest price quote to the highest
+  - [x] Buy quotes: sum up quote size from highest price quote to the lowest
 - Accumulative total size percentage bar formula:
-    - [x] Current quote accumulative total size / Total quote size of buy or sell
+  - [x] Current quote accumulative total size / Total quote size of buy or sell
 - Quote highlight animation:
-    - [x] When new quote appear(price hasn't shown on the order book before), add highlight animation on whole quote row. Red background color for sell quote. Green background color for buy quote.
-    - [x] When quote size change, add highlight animation on size cell. Red background color if size increase. Green background color if size decrease.
+  - [x] When new quote appear(price hasn't shown on the order book before), add highlight animation on whole quote row. Red background color for sell quote. Green background color for buy quote.
+  - [x] When quote size change, add highlight animation on size cell. Red background color if size increase. Green background color if size decrease.
 
 **OrderBook WebSocket API:**
 
@@ -25,8 +25,10 @@ Topic: `update:BTCPFC`
 
 API doc: [https://btsecom.github.io/docs/futures/en/#orderbook-incremental-updates](https://btsecom.github.io/docs/futures/en/#orderbook-incremental-updates)
 
-  - [x] The first response received will be a snapshot of the current order book (this is indicated in the `type` field with value `snapshot`) and 50 levels will be returned. Incremental updates will be sent in subsequent packets with type `delta` . 
-  - [ ] Re-subscribe topic to get new snapshot if `prevSeqNum` of new data doesn’t match last data’s `seqNum`
+- [x] The first response received will be a snapshot of the current order book (this is indicated in the `type` field with value `snapshot`) and 50 levels will be returned. Incremental updates will be sent in subsequent packets with type `delta` .
+- [ ] Re-subscribe topic to get new snapshot if `prevSeqNum` of new data doesn’t match last data’s `seqNum`
+- [ ] Bids and asks will be sent in price and size tuples. The size sent will be the new updated size for the price. If a value of 0 is sent, the price should be removed from the local copy of the orderbook.
+- [ ] Also if crossed orderbook ever occurs when the best bid higher or equal to the best ask, please unsubscribe and re-subscribe to the topic again.
 
 **Last price WebSocket API:**
 
@@ -50,3 +52,8 @@ API doc: [https://btsecom.github.io/docs/futures/en/#public-trade-fills](https:/
 - Sell quote accumulative total size bar color: `rgba(255, 90, 90, 0.12)`
 - Animation flash green background color: `rgba(0, 177, 93, 0.5)`
 - Animation flash red background color: `rgba(255, 91, 90, 0.5)`
+
+### Naming
+
+- Bids (buyers)
+- asks (sellers)
