@@ -37,35 +37,7 @@ export const orderBookSlice = createSlice({
         return;
       }
       action.payload.data.bids.forEach((element) => {
-        const key = Number(element[0]);
-        const size = parseInt(element[1]);
-        if (state.bids.has(key)) {
-          if (size === 0) {
-            state.bids.delete(key);
-            state.bidsArr = [...remove(state.bidsArr, key)];
-          } else {
-            const data = state.bids.get(key);
-            data.total = data.size + size;
-            data.status = size > data.size ? 'increase' : 'decrease';
-            state.buyQuotes -= data.size;
-            data.size = size;
-            state.buyQuotes += size;
-            state.bids.set(key, data);
-            state.bidsArr = [...updateArr(state.bidsArr, key)];
-          }
-        } else {
-          if (size === 0) {
-            return;
-          }
-          const obj = {
-            size: size,
-            total: size,
-            status: 'new',
-          };
-          state.bids.set(key, obj);
-          state.buyQuotes += size;
-          state.bidsArr = [...updateArr(state.bidsArr, key)];
-        }
+        updateData(element, state.bids, state.bidsArr, state.buyQuotes);
       });
       action.payload.data.asks.forEach((element) => {
         updateData(element, state.asks, state.asksArr, state.sellQuotes);
