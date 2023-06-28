@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/orderbook/static/css/main.7d464a2f.css",
+    "main.js": "/orderbook/static/js/main.69211e89.js",
+    "static/js/787.ab342aa2.chunk.js": "/orderbook/static/js/787.ab342aa2.chunk.js",
+    "index.html": "/orderbook/index.html",
+    "static/media/arrow.svg": "/orderbook/static/media/arrow.8c62356d76eb135a8cba2c6f85a5c0f4.svg",
+    "main.7d464a2f.css.map": "/orderbook/static/css/main.7d464a2f.css.map",
+    "main.69211e89.js.map": "/orderbook/static/js/main.69211e89.js.map",
+    "787.ab342aa2.chunk.js.map": "/orderbook/static/js/787.ab342aa2.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7d464a2f.css",
+    "static/js/main.69211e89.js"
+  ]
+}
